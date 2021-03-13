@@ -6,6 +6,7 @@ import { ChatContainer } from "./chat.styled";
 import { useDocument, useCollection } from "react-firebase-hooks/firestore";
 import { db } from "../../firebase";
 import { createRef } from "react";
+import Loader from "./../../components/Loader/Loader";
 const Chat = () => {
   const chatRef = createRef();
   const roomId = useSelector(({ app }) => app.roomId);
@@ -25,17 +26,21 @@ const Chat = () => {
 
   return (
     <ChatContainer>
-      {roomDetails && (
-        <>
-          <Header channelName={roomDetails?.data().name} />
-          <ChatBody
-            chatMessages={roomMessages}
-            loading={loading}
-            channelId={roomId}
-            chatRef={chatRef}
-            channelName={roomDetails?.data().name}
-          />
-        </>
+      {loading ? (
+        <Loader />
+      ) : (
+        roomDetails && (
+          <>
+            <Header channelName={roomDetails?.data().name} />
+            <ChatBody
+              chatMessages={roomMessages}
+              loading={loading}
+              channelId={roomId}
+              chatRef={chatRef}
+              channelName={roomDetails?.data().name}
+            />
+          </>
+        )
       )}
     </ChatContainer>
   );

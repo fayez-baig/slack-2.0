@@ -12,7 +12,7 @@ function App() {
   return (
     <>
       {loading ? (
-        <Loader />
+        <Loader displayImage />
       ) : (
         <Router>
           {!user ? (
